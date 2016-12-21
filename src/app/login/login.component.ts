@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
                 console.log(data);
                 this.auth_status = 'OK';
                 this.is_auth_error = false;
-                this.loggedInUser = data.username;
+                this.loggedInUser = data.data.username;
                 this.username = '';
                 this.password = '';
             })

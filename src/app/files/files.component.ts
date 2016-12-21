@@ -26,19 +26,18 @@ export class FilesComponent implements OnInit {
 	  function (event: Event) {
 	    let reader = new FileReader();
 	    reader.onload = function(e: any) {
-	    	console.log(e);
-	      // let data = e.currentTarget.result;
-	      // backand.service.uploadFile("todo", "files", file.name, data).subscribe(
-	      // 	data => { 
-	      // 		console.log(data);
-	      // 	}, 
-	      // 	err => backand.service.logError(err),
-	      //   () => console.log('OK')
-	      // );
+	        let data = e.currentTarget.result;
+		    backand.service.uploadFile("todo", "files", file.name, data).then(
+		      	(data) => { 
+		      		console.log(data);
+		      	})
+		      	.catch((err) => {
+		      		console.log(err);
+		      	}
+		    );
 	    };
-	    console.log(event);
-   		// let file = event.target.files[0];
-    	// reader.readAsDataURL(file);
+   		let file = (<any>event.target).files[0];
+    	reader.readAsDataURL(file);
 	  },
 	  function (err) {
 	    console.log('Error: %s', err);

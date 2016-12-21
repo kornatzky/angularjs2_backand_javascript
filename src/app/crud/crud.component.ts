@@ -72,24 +72,15 @@ export class CrudComponent {
             q = q.trim();
         }
 
-        let filter = 
-            [
-              {
-                fieldName: 'name',
-                operator: 'contains',
-                value: q
-              }
-            ]
-        ;
-
+        let filter = backand.helpers.filter.create('name', 'contains', q);
 
         backand.service.getList('todo', null, null, filter)
             .then((data: any) => {         
-                    console.log("subscribe", data);
+                    console.log(data);
                     this.items = data.data.data;
                 })
             .catch((err: any) => {
-                backand.service.logError(err)
+                console.log(err)
             }
         );
     }
