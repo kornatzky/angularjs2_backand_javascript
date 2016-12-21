@@ -2,10 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {Observable} from 'rxjs';
 
 declare var backand:any;
-// declare var eventTarget; 
-
-
-
 
 @Component({
   selector: 'app-files',
