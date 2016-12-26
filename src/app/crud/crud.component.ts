@@ -74,7 +74,7 @@ export class CrudComponent {
 
         let filter = backand.helpers.filter.create('name', 'contains', q);
 
-        backand.service.getList('todo', null, null, filter)
+        backand.service.getList('todo', filter)
             .then((data: any) => {         
                     console.log(data);
                     this.items = data.data.data;
