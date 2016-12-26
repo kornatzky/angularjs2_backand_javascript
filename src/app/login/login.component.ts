@@ -46,14 +46,16 @@ export class LoginComponent implements OnInit {
                 this.loggedInUser = data.data.username;
                 this.username = '';
                 this.password = '';
-            })
-            .catch(function(error: any){
+            },
+            (error: any) => {
                 console.log(error);
                 let errorMessage: string = error.data.error_description;
                 this.auth_status = `Error: ${errorMessage}`;
                 this.is_auth_error = true;
                 console.log(errorMessage)
-            });
+                this.auth_status = 'ERROR';
+            }
+        );
     }
 
     public useAnonymousAuth() {
@@ -80,10 +82,11 @@ export class LoginComponent implements OnInit {
             .then((data) => {
                     alert('Password changed');
                     this.oldPassword = this.newPassword = this.confirmNewPassword = '';
-             })
-            .catch((err) => {
+            },
+            (err) => {
                     console.log(err.data.error_description)
-             });
+            }
+        );
     }
 
 }

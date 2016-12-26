@@ -19,15 +19,14 @@ export class CrudComponent {
         this.searchQuery = '';
         let that = this;
         backand.socket.on("items_updated", 
-            (data) => {
+            (data: any) => {
                     console.log("items_updated", data);
                     let a = data as any[];
                     let newItem = {};
                     a.forEach((kv)=> newItem[kv.Key] = kv.Value);
                     that.items.unshift(newItem);
-            });
-        
-
+            }
+        );
     }
 
     public postItem() {
@@ -37,26 +36,29 @@ export class CrudComponent {
         };
 
         backand.service.create('todo', item)
-            .then((data) => {
-                    // add to beginning of array
-                    this.items.unshift({ id: null, name: this.name, description: this.description });
-                    console.log(this.items);
-                    this.name = '';
-                    this.description = '';
-                })
-            .catch((err) => {
-                    backand.service.logError(err);
-                }
+            .then((data: any) => {
+                // add to beginning of array
+                this.items.unshift({ id: null, name: this.name, description: this.description });
+                console.log(this.items);
+                this.name = '';
+                this.description = '';
+            },
+            (err: any) => {
+                console.log(err);
+            }
         );
     }
 
     public getItems() {
        backand.service.getList('todo')
-            .then((data) => {
-                    console.log(data);
-                    this.items = data.data.data;
-                })
-            .catch((err) => { backand.service.logError(err) }      
+            .then((data: any) => {
+                console.log(data);
+                this.items = data.data.data;
+            },
+            (err: any) => { 
+                console.log(err);
+                this.items = [{ name: 'yoram', 'description': 'sssss' }];
+            }      
         );
     }
 
@@ -72,14 +74,19 @@ export class CrudComponent {
             q = q.trim();
         }
 
-        let filter = backand.helpers.filter.create('name', 'contains', q);
+       
+        let params = {
+            filter: [
+                backand.helpers.filter.create('name', backand.helpers.filter.operators.text.contains, q),
+            ],
+        }
 
-        backand.service.getList('todo', filter)
+        backand.service.getList('todo', params)
             .then((data: any) => {         
-                    console.log(data);
-                    this.items = data.data.data;
-                })
-            .catch((err: any) => {
+                console.log(data);
+                this.items = data.data.data;
+            },
+            (err: any) => {
                 console.log(err)
             }
         );

@@ -35,30 +35,33 @@ export class SignupComponent implements OnInit {
       .then((data) => {
           alert('Sign up succeeded');
           this.email = this.signUpPassword = this.confirmPassword = this.firstName = this.lastName = '';
-      }).
-      catch((err) => {
-          backand.service.logError(err)
-      });
+      },
+      (err) => {
+          console.log(err)
+      }
+    );
   }
 
   public socialSignin(provider) {
     backand.service.socialSignin(provider)
       .then((data) => {
             console.log('Sign up succeeded with:' + provider);           
-        })
-      .catch((err) => {
-            backand.service.logError(err)
-        });
+      },
+      (err) => {
+            console.log(err)
+      }
+    );
   }
 
   public socialSignup(provider) {
     backand.service.socialSignup(provider)
       .then((data) => {
             console.log('Sign up succeeded with:' + provider);           
-        })
-      .catch((err) => {
-            backand.service.logError(err)
-        });
+      },
+      (err) => {
+            console.log(err)
+      }
+    );
   }
 
   // public inAppSocial(provider) {

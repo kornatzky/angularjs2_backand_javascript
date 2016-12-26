@@ -26,8 +26,8 @@ export class FilesComponent implements OnInit {
 		    backand.service.uploadFile("todo", "files", file.name, data).then(
 		      	(data) => { 
 		      		console.log(data);
-		      	})
-		      	.catch((err) => {
+		      	},
+		      	(err) => {
 		      		console.log(err);
 		      	}
 		    );
