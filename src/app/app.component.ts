@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-declare var backand:any;
+// import {BackandService} from 'vanillabknd-sdk';
+import {BackandService} from './backand.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,12 @@ declare var backand:any;
 export class AppComponent {
   title = 'app works!';
 
-	constructor(private router: Router){
+	constructor(private router: Router, private backand: BackandService){
 
   		backand.initiate({
-	      appName: 'your app name',
-	      signUpToken: 'your signup token',
-	      anonymousToken: 'your anonymousToken token',
+	      appName: 'todo33353',
+	      signUpToken: '215e5812-5789-4475-8ccb-42f3232da176',
+	      anonymousToken: '43a174e6-1a88-46dd-9081-99d3d22131a6',
 	      runSocket: true
 	    });
 	

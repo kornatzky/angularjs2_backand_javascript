@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-declare var backand:any;
+import {BackandService} from '../backand.service';
 
 @Component({
   selector: 'app-crud',
@@ -14,11 +13,13 @@ export class CrudComponent {
     description:string = 'Wonderful';
     public items:any[] = [];
     searchQuery: string;
+ 
 
-    constructor() {   
+    constructor(private backand: BackandService) { 
+        
         this.searchQuery = '';
         let that = this;
-        backand.socket.on("items_updated", 
+        this.backand.socket.on("items_updated", 
             (data: any) => {
                     console.log("items_updated", data);
                     let a = data as any[];
@@ -35,7 +36,7 @@ export class CrudComponent {
             description: this.description
         };
 
-        backand.service.create('todo', item)
+        this.backand.service.create('todo', item)
             .then((data: any) => {
                 // add to beginning of array
                 this.items.unshift({ id: null, name: this.name, description: this.description });
@@ -50,7 +51,7 @@ export class CrudComponent {
     }
 
     public getItems() {
-       backand.service.getList('todo')
+       this.backand.service.getList('todo')
             .then((data: any) => {
                 console.log(data);
                 this.items = data.data.data;
@@ -77,11 +78,11 @@ export class CrudComponent {
        
         let params = {
             filter: [
-                backand.helpers.filter.create('name', backand.helpers.filter.operators.text.contains, q),
+                this.backand.helpers.filter.create('name', this.backand.helpers.filter.operators.text.contains, q),
             ],
         }
 
-        backand.service.getList('todo', params)
+        this.backand.service.getList('todo', params)
             .then((data: any) => {         
                 console.log(data);
                 this.items = data.data.data;

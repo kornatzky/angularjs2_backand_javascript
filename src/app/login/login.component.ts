@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
-
-declare var backand:any;
+import {BackandService} from '../backand.service';
 
 @Component({
   selector: 'app-login',
@@ -27,18 +26,30 @@ export class LoginComponent implements OnInit {
     oldPassword: string = '';
     newPassword: string = '';
     confirmNewPassword: string = '';
+    
 
 
-    constructor() { 
-        this.auth_type = null;// backand.service.getAuthType();
-        this.auth_status = null; //  backand.service.getAuthStatus();
-        this.loggedInUser = null; // backand.service.getUsername();
+    constructor(private backand: BackandService) { 
+        this.backand.service.getUserDetails().then(
+            (data) => {
+                console.log(data);
+                this.loggedInUser = data.data.username;
+                this.auth_status = 'OK';
+                this.auth_type = data.data.token_type == 'Anonymous' ? 'Anonymous' : 'Token';
+            }, 
+            (err) => {
+                console.log(err);
+                this.loggedInUser = null;
+                this.auth_status = null;
+                this.auth_type = null;
+            }
+        );
     }
 
 
     public getAuthTokenSimple() {
         this.auth_type = 'Token';
-        backand.service.signin(this.username, this.password)
+        this.backand.service.signin(this.username, this.password)
             .then((data: any) => {
                 console.log(data);
                 this.auth_status = 'OK';
@@ -59,7 +70,7 @@ export class LoginComponent implements OnInit {
     }
 
     public useAnonymousAuth() {
-        backand.service.useAnonymousAuth();
+        this.backand.service.useAnonymousAuth();
         this.auth_status = 'OK';
         this.is_auth_error = false;
         this.auth_type = 'Anonymous';
@@ -68,7 +79,7 @@ export class LoginComponent implements OnInit {
 
     public signOut() {
         this.auth_status = null;
-        backand.service.signout();
+        this.backand.service.signout();
     }
 
 
@@ -78,7 +89,7 @@ export class LoginComponent implements OnInit {
             alert('Passwords should match');
             return;
         }
-        backand.service.changePassword(this.oldPassword, this.newPassword)
+        this.backand.service.changePassword(this.oldPassword, this.newPassword)
             .then((data) => {
                     alert('Password changed');
                     this.oldPassword = this.newPassword = this.confirmNewPassword = '';

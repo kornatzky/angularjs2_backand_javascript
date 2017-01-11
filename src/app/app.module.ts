@@ -10,6 +10,8 @@ import { SignupComponent } from './signup/signup.component';
 import { CrudComponent } from './crud/crud.component';
 import { FilesComponent } from './files/files.component';
 
+import {BackandService} from './backand.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,7 @@ import { FilesComponent } from './files/files.component';
     HttpModule,
     MyDreamAppRoutingModule,
   ],
-  providers: [],
+  providers: [BackandService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
-
-declare var backand:any;
+import {BackandService} from '../backand.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,8 +8,6 @@ declare var backand:any;
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-
- 
 
   ngOnInit() {
   }
@@ -21,7 +18,7 @@ export class SignupComponent implements OnInit {
   signUpPassword: string = '';
   confirmPassword: string = '';
 
-  constructor() {
+  constructor(private backand: BackandService) {
 
 
   }
@@ -31,7 +28,7 @@ export class SignupComponent implements OnInit {
       alert('Passwords should match');
       return;
     }
-    backand.service.signup(this.email, this.signUpPassword, this.confirmPassword, this.firstName, this.lastName)
+    this.backand.service.signup(this.email, this.signUpPassword, this.confirmPassword, this.firstName, this.lastName)
       .then((data) => {
           alert('Sign up succeeded');
           this.email = this.signUpPassword = this.confirmPassword = this.firstName = this.lastName = '';
@@ -43,7 +40,7 @@ export class SignupComponent implements OnInit {
   }
 
   public socialSignin(provider) {
-    backand.service.socialSignin(provider)
+    this.backand.service.socialSignin(provider)
       .then((data) => {
             console.log('Sign up succeeded with:' + provider);           
       },
@@ -54,7 +51,7 @@ export class SignupComponent implements OnInit {
   }
 
   public socialSignup(provider) {
-    backand.service.socialSignup(provider)
+    this.backand.service.socialSignup(provider)
       .then((data) => {
             console.log('Sign up succeeded with:' + provider);           
       },

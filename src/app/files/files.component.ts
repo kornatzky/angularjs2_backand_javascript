@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {Observable} from 'rxjs';
-
-declare var backand:any;
+import {BackandService} from '../backand.service';
 
 @Component({
   selector: 'app-files',
@@ -12,7 +11,9 @@ export class FilesComponent implements OnInit {
 
   @ViewChild('inputFile') inputFile; 
 
-  constructor() { 
+
+  constructor(private backand: BackandService) { 
+  	
   }
 
 
@@ -23,7 +24,7 @@ export class FilesComponent implements OnInit {
 	    let reader = new FileReader();
 	    reader.onload = function(e: any) {
 	        let data = e.currentTarget.result;
-		    backand.service.uploadFile("todo", "files", file.name, data).then(
+		    this.backand.service.uploadFile("todo", "files", file.name, data).then(
 		      	(data) => { 
 		      		console.log(data);
 		      	},
