@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
-import {BackandService} from '../backand.service';
+import { BackandService } from 'angular2bknd-sdk';
 
 @Component({
   selector: 'app-signup',
@@ -28,44 +28,44 @@ export class SignupComponent implements OnInit {
       alert('Passwords should match');
       return;
     }
-    this.backand.service.signup(this.email, this.signUpPassword, this.confirmPassword, this.firstName, this.lastName)
-      .then((data) => {
+    this.backand.signup(this.email, this.signUpPassword, this.confirmPassword, this.firstName, this.lastName)
+      .then((data: any) => {
           alert('Sign up succeeded');
           this.email = this.signUpPassword = this.confirmPassword = this.firstName = this.lastName = '';
       },
-      (err) => {
+      (err: any) => {
           console.log(err)
       }
     );
   }
 
-  public socialSignin(provider) {
-    this.backand.service.socialSignin(provider)
-      .then((data) => {
-            console.log('Sign up succeeded with:' + provider);           
+  public socialSignin(provider: string) {
+    this.backand.socialSignin(provider)
+      .then((data: any) => {
+            console.log('Sign up succeeded with:' + provider);
       },
-      (err) => {
+      (err: any) => {
             console.log(err)
       }
     );
   }
 
-  public socialSignup(provider) {
-    this.backand.service.socialSignup(provider)
-      .then((data) => {
-            console.log('Sign up succeeded with:' + provider);           
-      },
-      (err) => {
-            console.log(err)
-      }
-    );
-  }
+  // public socialSignup(provider) {
+  //   this.backand.socialSignup(provider)
+  //     .then((data: any) => {
+  //           console.log('Sign up succeeded with:' + provider);
+  //     },
+  //     (err: any) => {
+  //           console.log(err)
+  //     }
+  //   );
+  // }
 
   // public inAppSocial(provider) {
   //   var $obs = backand.service.inAppSocial(provider);
-  //   $obs.subscribe(                
+  //   $obs.subscribe(
   //       data => {
-  //           console.log('Sign up succeeded with:' + provider);           
+  //           console.log('Sign up succeeded with:' + provider);
   //       },
   //       err => {
   //           backand.service.logError(err)

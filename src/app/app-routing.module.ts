@@ -18,4 +18,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class MyDreamAppRoutingModule { }
+export class AppRoutingModule { }

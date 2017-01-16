@@ -1,6 +1,7 @@
+import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { MyDreamAppRoutingModule }  from './app-routing.module';
+
+import { AppRoutingModule }  from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -9,10 +10,15 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { CrudComponent } from './crud/crud.component';
 import { FilesComponent } from './files/files.component';
-
-import {BackandService} from './backand.service';
+import { BackandService } from 'angular2bknd-sdk';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    AppRoutingModule,
+  ],
   declarations: [
     AppComponent,
     LoginComponent,
@@ -20,13 +26,7 @@ import {BackandService} from './backand.service';
     CrudComponent,
     FilesComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    MyDreamAppRoutingModule,
-  ],
-  providers: [BackandService],
-  bootstrap: [AppComponent]
+  providers: [ BackandService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

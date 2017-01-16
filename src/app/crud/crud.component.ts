@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BackandService} from '../backand.service';
+import { BackandService } from 'angular2bknd-sdk';
 
 @Component({
   selector: 'app-crud',
@@ -9,17 +9,17 @@ import {BackandService} from '../backand.service';
 export class CrudComponent {
 
 
-	name:string = 'World';
+    name:string = 'World';
     description:string = 'Wonderful';
     public items:any[] = [];
     searchQuery: string;
- 
 
-    constructor(private backand: BackandService) { 
-        
+
+    constructor(private backand: BackandService) {
+
         this.searchQuery = '';
         let that = this;
-        this.backand.socket.on("items_updated", 
+        this.backand.on("items_updated",
             (data: any) => {
                     console.log("items_updated", data);
                     let a = data as any[];
@@ -32,11 +32,11 @@ export class CrudComponent {
 
     public postItem() {
         let item = {
-            name: this.name, 
+            name: this.name,
             description: this.description
         };
 
-        this.backand.service.create('todo', item)
+        this.backand.object.create('todo', item)
             .then((data: any) => {
                 // add to beginning of array
                 this.items.unshift({ id: null, name: this.name, description: this.description });
@@ -51,15 +51,15 @@ export class CrudComponent {
     }
 
     public getItems() {
-       this.backand.service.getList('todo')
+       this.backand.object.getList('todo')
             .then((data: any) => {
                 console.log(data);
-                this.items = data.data.data;
+                this.items = data.data;
             },
-            (err: any) => { 
+            (err: any) => {
                 console.log(err);
                 this.items = [{ name: 'yoram', 'description': 'sssss' }];
-            }      
+            }
         );
     }
 
@@ -75,17 +75,17 @@ export class CrudComponent {
             q = q.trim();
         }
 
-       
+
         let params = {
             filter: [
                 this.backand.helpers.filter.create('name', this.backand.helpers.filter.operators.text.contains, q),
             ],
         }
 
-        this.backand.service.getList('todo', params)
-            .then((data: any) => {         
+        this.backand.object.getList('todo', params)
+            .then((data: any) => {
                 console.log(data);
-                this.items = data.data.data;
+                this.items = data.data;
             },
             (err: any) => {
                 console.log(err)
@@ -94,4 +94,3 @@ export class CrudComponent {
     }
 
 }
-

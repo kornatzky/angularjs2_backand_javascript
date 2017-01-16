@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Observable} from 'rxjs';
-import {BackandService} from '../backand.service';
+import { Observable } from 'rxjs/Observable';
+import { BackandService } from 'angular2bknd-sdk';
 
 @Component({
   selector: 'app-files',
@@ -8,33 +8,35 @@ import {BackandService} from '../backand.service';
   styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
+  url: string = "";
+  disabled: boolean = true;
+  name: string = "";
+  @ViewChild('inputFile') inputFile: any;
 
-  @ViewChild('inputFile') inputFile; 
-
-
-  constructor(private backand: BackandService) { 
-  	
-  }
+  constructor(private backand: BackandService) { }
 
 
   ngAfterViewInit() {
 	let source = Observable.fromEvent(this.inputFile.nativeElement, 'change');
 	let subscription = source.subscribe(
-	  function (event: Event) {
+	  (event: Event) => {
 	    let reader = new FileReader();
-	    reader.onload = function(e: any) {
+	    reader.onload = (e: any) => {
 	        let data = e.currentTarget.result;
-		    this.backand.service.uploadFile("todo", "files", file.name, data).then(
-		      	(data) => { 
+	        this.backand.file.upload("todo", "files", file.name, data).then(
+		      	(data: any) => {
+              this.disabled = !this.disabled;
+              this.url = data.data.url;
 		      		console.log(data);
 		      	},
-		      	(err) => {
+		      	(err: any) => {
 		      		console.log(err);
 		      	}
 		    );
 	    };
    		let file = (<any>event.target).files[0];
     	reader.readAsDataURL(file);
+      this.name = file.name;
 	  },
 	  function (err) {
 	    console.log('Error: %s', err);
@@ -43,6 +45,19 @@ export class FilesComponent implements OnInit {
 	    console.log('Completed');
 	  });
 
+  }
+
+  removeFile() {
+    this.backand.file.remove("todo", "files", this.name).then(
+      (data: any) => {
+        this.disabled = !this.disabled;
+        this.url = "";
+        console.log(data);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+  );
   }
 
   ngOnInit() {
