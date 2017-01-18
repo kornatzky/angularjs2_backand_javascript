@@ -10,7 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { CrudComponent } from './crud/crud.component';
 import { FilesComponent } from './files/files.component';
-import { BackandService } from 'angular2bknd-sdk';
+import { BackandService } from '@backand/bkndangular2-sdk';
 
 @NgModule({
   imports: [

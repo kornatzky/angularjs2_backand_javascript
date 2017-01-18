@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BackandService } from 'angular2bknd-sdk';
+import { BackandService } from '@backand/bkndangular2-sdk';
 
 @Component({
   selector: 'app-files',
