@@ -16,11 +16,10 @@ export class AppComponent {
   
   ngOnInit(): void {
     this.backand.init({
-      appName: 'backandcrudrealtime',
-      signUpToken: '9d675688-c4df-41aa-89c2-81afa68931df',
-      anonymousToken: '6c7b5327-9e2a-4626-bb92-b7255b071810',
-      runSocket: true,
-      useAnonymousTokenByDefault: true
+      appName: 'your app name',
+      signUpToken: 'your signup token',
+      anonymousToken: 'your anonymous token',
+      runSocket: true
     });
   }
 	public navigate(url: any) {
