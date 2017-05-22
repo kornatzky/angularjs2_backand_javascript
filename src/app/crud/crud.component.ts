@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackandService } from '@backand/bkndangular2-sdk';
+import { BackandService } from '@backand/angular2-sdk';
 
 @Component({
   selector: 'app-crud',

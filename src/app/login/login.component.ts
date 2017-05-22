@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
-import { BackandService } from '@backand/bkndangular2-sdk';
+import { BackandService } from '@backand/angular2-sdk';
 
 @Component({
   selector: 'app-login',
@@ -8,11 +8,6 @@ import { BackandService } from '@backand/bkndangular2-sdk';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-
-    ngOnInit() {
-    }
-
 
 
     username:string = 'test@angular2.com';
@@ -33,9 +28,14 @@ export class LoginComponent implements OnInit {
         this.backand.user.getUserDetails().then(
             (data: any) => {
                 console.log(data);
-                this.loggedInUser = data.data.username;
-                this.auth_status = 'OK';
-                this.auth_type = data.data.token_type == 'Anonymous' ? 'Anonymous' : 'Token';
+                if (data.data){
+                    this.loggedInUser = data.data.username;
+                    this.auth_status = 'OK';
+                    this.auth_type = data.data.token_type == 'Anonymous' ? 'Anonymous' : 'Token';
+                }
+                else{
+                    this.auth_status = null;
+                }
             },
             (err: any) => {
                 console.log(err);
@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
                 this.auth_type = null;
             }
         );
+    }
+
+    ngOnInit() : void {
     }
 
 

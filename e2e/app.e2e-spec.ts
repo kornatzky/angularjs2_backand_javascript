@@ -1,10 +1,10 @@
-import { Angularjs2BackandJavascriptPage } from './app.po';
+import { TempPage } from './app.po';
 
-describe('angularjs2-backand-javascript App', function() {
-  let page: Angularjs2BackandJavascriptPage;
+describe('temp App', () => {
+  let page: TempPage;
 
   beforeEach(() => {
-    page = new Angularjs2BackandJavascriptPage();
+    page = new TempPage();
   });
 
   it('should display message saying app works', () => {

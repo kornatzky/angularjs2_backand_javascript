@@ -1,6 +1,6 @@
-import { browser, element, by } from 'protractor';
+import { browser, by, element } from 'protractor';
 
-export class Angularjs2BackandJavascriptPage {
+export class TempPage {
   navigateTo() {
     return browser.get('/');
   }

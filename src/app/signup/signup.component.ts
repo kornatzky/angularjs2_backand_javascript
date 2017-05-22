@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
-import { BackandService } from '@backand/bkndangular2-sdk';
+import { BackandService } from '@backand/angular2-sdk';
 
 @Component({
   selector: 'app-signup',
